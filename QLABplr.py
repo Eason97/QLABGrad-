@@ -39,7 +39,6 @@ def FindPLR(g_0,init_lr,model, criterion, xtrain, ytrain):
     temp_grads = {}
     for ws in original_parmeters:
         expr = 'temp_grads["%s"]=copy.deepcopy(model.%s.grad)' % (ws, _trans_name_dict[ws])
-        # 获取当前梯度
         exec(expr, {'temp_grads': temp_grads, 'copy': copy, 'model': model})
 
     for ws in original_parmeters:
