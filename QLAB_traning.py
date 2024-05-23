@@ -29,16 +29,16 @@ class MLP(nn.Module):
 
         in_channels = 1
         self.model = nn.Sequential(OrderedDict([
-            ('fc1', nn.Linear(1024, 1000)),  # 输入层连接到第1个全连接层，1000个神经元
-            ('relu1', nn.ReLU()),  # relu激活函数
-            ('f2', nn.Linear(1000, 1000)),  # 第1个全连接层连接到第2个全连接层，1000个神经元
-            ('relu2', nn.ReLU()),  # relu激活函数
-            ('f3', nn.Linear(1000, 10))  # 连接到输出层
+            ('fc1', nn.Linear(1024, 1000)), 
+            ('relu1', nn.ReLU()), 
+            ('f2', nn.Linear(1000, 1000)), 
+            ('relu2', nn.ReLU()), 
+            ('f3', nn.Linear(1000, 10)) 
         ]))
 
     def forward(self, img):
-        output = img.view(img.size(0), -1)  # 对输入的图像矩阵，先拉伸为一维向量
-        output = self.model(output)  # 然后传入模型进行训练
+        output = img.view(img.size(0), -1)
+        output = self.model(output) 
         return output
 
 
@@ -53,7 +53,6 @@ def test(net, criterion, _data_loader, _dataset):
         net.eval()
         total_correct = 0
         avg_loss = 0.0
-        # 遍历每个 batch 的数据
         for i, (images, labels) in enumerate(_data_loader):
             images, labels = images.to(device), labels.to(device)
             output = net(images)
@@ -73,11 +72,9 @@ optimizer = optim.SGD(net.parameters(), lr=0.01)
 
 iteration = 0
 prev_lr = 1e-1
-# 迭代10次
-for epoch in range(0, 50):
+for epoch in range(0, 100):
     print('Starting epoch %d / %d' % (epoch + 1, 50))
     net.train()
-    # 遍历训练集的每个 batch
     for i, (images, labels) in enumerate(data_train_loader):
         images, labels = images.to(device), labels.to(device)
         optimizer.zero_grad()
